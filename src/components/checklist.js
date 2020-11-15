@@ -1,9 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ChecklistSubItems from './checklistSubItems'
 
 function Checklist(props) {
     const [inputValue, setInputValue] = useState('')
     const currentChecklist = {...props.itemList[props.checklistId]}
+
+    useEffect(() => {
+        if(!props.itemLabel) {
+            currentChecklist.label = `Checklist ${props.numOfLists}`
+            props.setItemList([...props.itemList.slice(0, props.checklistId), currentChecklist, ...props.itemList.slice(parseInt(props.checklistId) + 1)])
+        }
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -43,24 +50,6 @@ function Checklist(props) {
         props.setItemList([...props.itemList.slice(0, props.checklistId), currentChecklist, ...props.itemList.slice(parseInt(props.checklistId) + 1)])
     }
 
-    const handleDragStart = (e) => {
-        e.dataTransfer.setData('id', e.target.id)
-    }
-
-    const handleDragOver = (e) => {
-        e.preventDefault()
-    }
-
-    const handleDrop = (e, id) => {
-        const draggedListId = e.dataTransfer.getData('id')
-        const draggedList = {...props.itemList[draggedListId]}
-        if(parseInt(draggedListId) >= id) {
-            props.setItemList([...props.itemList.slice(0, id), draggedList, ...props.itemList.slice(id, draggedListId), ...props.itemList.slice(parseInt(draggedListId) + 1)])
-        } else {
-            props.setItemList([...props.itemList.slice(0, draggedListId), ...props.itemList.slice(parseInt(draggedListId) + 1, id + 1), draggedList, ...props.itemList.slice(id + 1)])
-        }
-    }
-
     const handleDeleteChecklist = (e) => {
         props.itemList[props.checklistId].subItems.forEach(item => {
             if(item.complete) {
@@ -98,13 +87,9 @@ function Checklist(props) {
     }
 
     return <div id={props.checklistId}
-                className='checklist'
-                draggable={true}
-                onDragStart={handleDragStart}
-                onDragOver={handleDragOver}
-                onDrop={e => handleDrop(e, props.checklistId)}>
+                className='checklist'>
         <div className='item-header-container'>
-            <p className='item-name'>{!!props.itemLabel ? props.itemLabel : 'Checklist ' + props.numOfLists}</p>
+            <p className='item-name'>{props.itemLabel}</p>
             <button id={props.checklistId} className='remove-button' onClick={handleDeleteChecklist}>&#x2716;</button>
         </div>
         <form onSubmit={handleSubmit}>
