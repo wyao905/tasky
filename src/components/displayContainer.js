@@ -47,23 +47,31 @@ function DisplayContainer(props) {
                                     {...provided.dragHandleProps}
                                     style={{userSelect: 'none',
                                             ...provided.draggableProps.style}}>
-                                    <Checklist itemLabel={item.label} 
-                                               numOfLists={numOfLists}
-                                               itemList={props.itemList}
-                                               setItemList={props.setItemList}
-                                               tasksOverview={tasksOverview}
-                                               updateTasksOverview={setTasksOverview}
-                                               handleItemDelete={handleItemDelete}
-                                               checklistId={id}/>
+                            <Checklist itemLabel={item.label} 
+                                       numOfLists={numOfLists}
+                                       itemList={props.itemList}
+                                       setItemList={props.setItemList}
+                                       tasksOverview={tasksOverview}
+                                       updateTasksOverview={setTasksOverview}
+                                       handleItemDelete={handleItemDelete}
+                                       checklistId={id}/>
                         </div>
                     }}
                 </Draggable>
             } else {
                 numOfNotes += 1
-                return <div>
-                    <p>{!!item.label ? item.label : 'Note ' + numOfNotes}</p>
-                    <Note/>
-                </div>
+                return <Draggable key={id} draggableId={id.toString()} index={id}>
+                    {(provided, snapshot) => {
+                        return <div ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    style={{userSelect: 'none',
+                                            ...provided.draggableProps.style}}>
+                            <p>{!!item.label ? item.label : 'Note ' + numOfNotes}</p>
+                            <Note/>
+                        </div>
+                    }}
+                </Draggable>
             }
         })
     }

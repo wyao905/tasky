@@ -3,6 +3,8 @@ import ChecklistSubItems from './checklistSubItems'
 
 function Checklist(props) {
     const [inputValue, setInputValue] = useState('')
+    const [inputEditValue, setInputEditValue] = useState('')
+    const [itemLabelEditState, setItemLabelEditState] = useState(false)
     const currentChecklist = {...props.itemList[props.checklistId]}
 
     useEffect(() => {
@@ -20,8 +22,28 @@ function Checklist(props) {
         props.updateTasksOverview({...props.tasksOverview, total: props.tasksOverview.total += 1})
     }
 
+    const handleEditSubmit = (e) => {
+        if(inputEditValue !== '') {
+            e.preventDefault()
+            currentChecklist.label = inputEditValue
+            const copiedItemList = [...props.itemList]
+            copiedItemList.splice(props.checklistId, 1, currentChecklist)
+            props.setItemList(copiedItemList)
+            setInputEditValue('')
+        }
+        setItemLabelEditState(false)
+    }
+
     const handleInputChange = (e) => {
         setInputValue(e.target.value)
+    }
+
+    const handleInputEdit = (e) => {
+        setInputEditValue(e.target.value)
+    }
+
+    const toggleEditState = () => {
+        setItemLabelEditState(true)
     }
 
     const handleCheckChange = (e) => {
@@ -72,6 +94,23 @@ function Checklist(props) {
         }
     }
 
+    const displayItemLabelContainer = () => {
+        if(itemLabelEditState) {
+            return <form onSubmit={handleEditSubmit}>
+                <input type='text'
+                       placeholder={props.itemLabel}
+                       value={inputEditValue}
+                       onChange={handleInputEdit}/>
+
+            </form>
+        } else {
+            return <div style={{display: 'flex'}}>
+                <p className='item-name'>{props.itemLabel}</p>
+                <button onClick={toggleEditState}>&#9998;</button>
+            </div>
+        }
+    }
+
     const displayListItems = () => {
         return props.itemList[props.checklistId].subItems.map((item, id) => {
             return <div>
@@ -79,8 +118,8 @@ function Checklist(props) {
                 <label style={item.complete ? complete : incomplete}>
                     {item.label}
                 </label>
-                <button id={id} className='remove-button' onClick={handleDeleteListItem}>&#x2716;</button>
-                <button id={id} className='add-sub-item' onClick={handleAddSubItem}>&#9998;</button>
+                <button id={id} className='remove-button' onClick={handleDeleteListItem}>&#10006;</button>
+                <button id={id} className='add-sub-item' onClick={handleAddSubItem}>&#10010;</button>
                 {displayListSubItems(item, id)}
             </div>
         })
@@ -89,8 +128,8 @@ function Checklist(props) {
     return <div id={props.checklistId}
                 className='checklist'>
         <div className='item-header-container'>
-            <p className='item-name'>{props.itemLabel}</p>
-            <button id={props.checklistId} className='remove-button' onClick={handleDeleteChecklist}>&#x2716;</button>
+            {displayItemLabelContainer()}
+            <button id={props.checklistId} className='remove-button' onClick={handleDeleteChecklist}>&#10006;</button>
         </div>
         <form onSubmit={handleSubmit}>
             <input type='text'
