@@ -28,7 +28,7 @@
 }
 
 #item-input-form-submit:active {
-  background-color: skyblue;
+  filter: brightness(90%);
   border-color: lightgrey;
 }
 
@@ -87,6 +87,10 @@
   outline: none;
 }
 
+#note-content-submit-button:active {
+  filter: brightness(90%);
+}
+
 .item-name {
   margin: 0 30px 0 0;
   font-size: medium;
@@ -98,6 +102,12 @@
 }
 
 .checklist {
+  padding: 5px 0 5px 5px;
+  margin-bottom: 2px;
+  border-left: 15px solid blue;
+}
+
+.note {
   padding: 5px 0 5px 5px;
   margin-bottom: 2px;
   border-left: 15px solid blue;

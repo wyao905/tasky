@@ -70,9 +70,17 @@ function DisplayContainer(props) {
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={{userSelect: 'none',
+                                            background: snapshot.isDragging ? 'lightblue' : 'lightcyan',
+                                            margin: '0 0 0 30px',
+                                            width: '30rem',
                                             ...provided.draggableProps.style}}>
-                            <p>{!!item.label ? item.label : 'Note ' + numOfNotes}</p>
-                            <Note/>
+                            <Note itemLabel={item.label}
+                                  itemContent={item.content}
+                                  numOfNotes={numOfNotes}
+                                  itemList={props.itemList}
+                                  setItemList={props.setItemList}
+                                  handleItemDelete={handleItemDelete}
+                                  noteIndex={index}/>
                         </div>
                     }}
                 </Draggable>

@@ -13,11 +13,16 @@ function ItemAddContainer() {
         e.preventDefault()
         if(selectValue === 'progressBar') {
             setDisplayProgressBar(true)
-        } else {
+        } else if(selectValue === 'checklist') {
             setItemList([...itemList, {id: uuid(),
                                        label: textValue,
                                        type: selectValue,
                                        subItems: []}])
+        } else {
+            setItemList([...itemList, {id: uuid(),
+                                       label: textValue,
+                                       type: selectValue,
+                                       content: ''}])
         }
     }
 
