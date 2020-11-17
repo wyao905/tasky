@@ -37,27 +37,74 @@
   display: flex;
 }
 
+.list-item-input {
+  border: none;
+  background-color: lightcyan;
+  outline: none;
+  margin: 5px 0;
+}
+
+.list-item-input:focus {
+  background-color: lightskyblue;
+}
+
+.list-item-edit-label-input {
+  border: none;
+  background-color: lightcyan;
+  outline: none;
+  font-size: medium;
+  font-weight: bold;
+  height: 1rem;
+}
+
+.list-item-edit-label-input:focus {
+  background-color: lightskyblue;
+}
+
+.list-item {
+  margin: 0 10px 5px 10px;
+  border-bottom: 1px solid lightgrey;
+}
+
 .remove-button {
   border: none;
   color: red;
-  background-color: white;
+  background-color: lightcyan;
   outline: none;
-  text-align: center;
+}
+
+.edit-button {
+  border: none;
+  color: blue;
+  background-color: lightcyan;
+  outline: none;
+}
+
+.add-sub-item-button {
+  border: none;
+  color: orange;
+  background-color: lightcyan;
+  outline: none;
 }
 
 .item-name {
   margin: 0 30px 0 0;
-}
+  font-size: medium;
+  font-weight: bold;
+  }
 
 #overall-progress {
   margin: 0px;
 }
 
 .checklist {
+  padding: 5px 0 5px 5px;
+  margin-bottom: 2px;
+  border-left: 15px solid blue;
+}
+
+.sub-checklist {
   margin: 0 0 0 30px;
-  padding: 30px 0 0 0;
-  width: 240px;
-  border: 2px solid lightgrey;
 }
 
 #progress-bar-container {

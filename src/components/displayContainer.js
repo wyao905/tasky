@@ -17,8 +17,8 @@ function DisplayContainer(props) {
         }
     }
 
-    const handleItemDelete = (itemId) => {
-        props.setItemList([...props.itemList.slice(0, itemId), ...props.itemList.slice(parseInt(itemId) + 1)])
+    const handleItemDelete = (itemInd) => {
+        props.setItemList([...props.itemList.slice(0, itemInd), ...props.itemList.slice(parseInt(itemInd) + 1)])
     }
 
     const onDragEnd = (result) => {
@@ -37,15 +37,18 @@ function DisplayContainer(props) {
         let numOfLists = 0
         let numOfNotes = 0
 
-        return props.itemList.map((item, id)=> {
+        return props.itemList.map((item, index)=> {
             if(item.type === 'checklist') {
                 numOfLists += 1
-                return <Draggable key={id} draggableId={id.toString()} index={id}>
+                return <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided, snapshot) => {
                         return <div ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={{userSelect: 'none',
+                                            background: snapshot.isDragging ? 'lightblue' : 'lightcyan',
+                                            margin: '0 0 0 30px',
+                                            width: '30rem',
                                             ...provided.draggableProps.style}}>
                             <Checklist itemLabel={item.label} 
                                        numOfLists={numOfLists}
@@ -54,13 +57,14 @@ function DisplayContainer(props) {
                                        tasksOverview={tasksOverview}
                                        updateTasksOverview={setTasksOverview}
                                        handleItemDelete={handleItemDelete}
-                                       checklistId={id}/>
+                                       checklistIndex={index}
+                                       checklistId={item.id}/>
                         </div>
                     }}
                 </Draggable>
             } else {
                 numOfNotes += 1
-                return <Draggable key={id} draggableId={id.toString()} index={id}>
+                return <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided, snapshot) => {
                         return <div ref={provided.innerRef}
                                     {...provided.draggableProps}

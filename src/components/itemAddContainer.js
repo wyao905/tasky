@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import uuid from 'react-uuid'
 import Select from 'react-select'
 import DisplayContainer from './displayContainer'
 
@@ -13,7 +14,8 @@ function ItemAddContainer() {
         if(selectValue === 'progressBar') {
             setDisplayProgressBar(true)
         } else {
-            setItemList([...itemList, {label: textValue,
+            setItemList([...itemList, {id: uuid(),
+                                       label: textValue,
                                        type: selectValue,
                                        subItems: []}])
         }
