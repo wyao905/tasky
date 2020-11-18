@@ -4,7 +4,6 @@ function Note(props) {
     const [inputValue, setInputValue] = useState('')
     const [inputEditLabelValue, setInputEditLabelValue] = useState('')
     const [itemLabelEditState, setItemLabelEditState] = useState(false)
-    const [itemContentEditState, setItemContentEditState] = useState(true)
     const currentNote = {...props.itemList[props.noteIndex]}
 
     useEffect(() => {
@@ -18,13 +17,6 @@ function Note(props) {
         const copiedItemList = [...props.itemList]
         copiedItemList.splice(props.noteIndex, 1, currentNote)
         props.setItemList(copiedItemList)
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        currentNote.content = inputValue
-        updateItemList()
-        setItemContentEditState(false)
     }
 
     const handleEditSubmit = (e) => {
@@ -49,10 +41,6 @@ function Note(props) {
         setItemLabelEditState(true)
     }
 
-    const toggleEditContentState = () => {
-        setItemContentEditState(true)
-    }
-
     const handleDelete = (e) => {
         props.handleItemDelete(e.target.id)
     }
@@ -69,53 +57,32 @@ function Note(props) {
         } else {
             return <div style={{display: 'flex'}}>
                 <p className='item-name'>{props.itemLabel}</p>
-                <button className='edit-button' onClick={toggleEditLabelState}>&#9998;</button>
-            </div>
-        }
-    }
-
-    const display = () => {
-        if(!itemContentEditState) {
-            return <div style={{display: 'flex'}}>
-                <p style={{whiteSpace: 'pre-wrap'}}>{props.itemContent}</p>
-                <button className='edit-button' onClick={toggleEditContentState}>&#9998;</button>
-            </div>
-        } else {
-            return <div style={{display: 'flex'}}>
-                <form onSubmit={handleSubmit}
-                      style={{display: 'flex'}}>
-                    <textarea style={{border: 'none',
-                                      margin: '0 0 5px 10px',
-                                      borderBottom: '1px solid lightgrey',
-                                      width: '15rem',
-                                      minHeight: '50px',
-                                      resize: 'vertical',
-                                      outline: 'none'}}
-                              value={inputValue}
-                              placeholder='Add Note...'
-                              onChange={handleInputChange}/>
-                    <input style={{border: 'none',
-                                   backgroundColor: 'cyan',
-                                   align: 'center',
-                                   margin: '0 0 5px 0',
-                                   color: 'white',
-                                   fontSize: 'large',
-                                   fontWeight: 'bold',
-                                   outline: 'none'}}
-                           id='note-content-submit-button'
-                           type='submit'
-                           value='+'/>
-                </form>
             </div>
         }
     }
 
     return <div className='note'>
-        <div className='item-header-container'>
+        <div className='item-header-container'
+             style={{display: 'flex',
+                     justifyContent: "space-between"}}>
             {displayItemLabelContainer()}
-            <button id={props.noteIndex} className='remove-button' onClick={handleDelete}>&#10006;</button>
+            <div>
+                <button className='edit-button' onClick={toggleEditLabelState}>&#9998;</button>
+                <button id={props.noteIndex} className='remove-button' onClick={handleDelete}>&#10006;</button>
+            </div>
         </div>
-        {display()}
+        <textarea style={{border: '1px solid lightgrey',
+                          borderRadius: '5px',
+                          margin: '0 0 5px 0',
+                          padding: '6px',
+                          width: '416px',
+                          height: '150px',
+                          fontFamily: 'inherit',
+                          resize: 'none',
+                          outline: 'none'}}
+                  value={inputValue}
+                  placeholder='Add Note...'
+                  onChange={handleInputChange}/>
     </div>
 }
 

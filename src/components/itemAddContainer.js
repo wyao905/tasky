@@ -18,12 +18,14 @@ function ItemAddContainer() {
                                        label: textValue,
                                        type: selectValue,
                                        subItems: []}])
-        } else {
+        } else if(selectValue === 'note') {
             setItemList([...itemList, {id: uuid(),
                                        label: textValue,
                                        type: selectValue,
                                        content: ''}])
         }
+        setTextValue('')
+        setSelectValue('')
     }
 
     const handleTextChange = (e) => {
@@ -53,7 +55,8 @@ function ItemAddContainer() {
         </form>
         <DisplayContainer displayProgressBar={displayProgressBar}
                           itemList={itemList}
-                          setItemList={setItemList}/>
+                          setItemList={setItemList}
+                          setDisplayProgressBar={setDisplayProgressBar}/>
     </div>
 }
 
@@ -85,7 +88,7 @@ const customStyles = {
         borderTop: 'none',
         borderLeft: 'none',
         borderBottom: 'none',
-        borderRight: '2px solid lightgrey',
+        borderRight: '1px solid lightgrey',
         borderRadius: 0,
         boxShadow: 'none',
         margin: 5 + 'px',

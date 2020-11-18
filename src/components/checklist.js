@@ -110,39 +110,56 @@ function Checklist(props) {
         } else {
             return <div style={{display: 'flex'}}>
                 <p className='item-name'>{props.itemLabel}</p>
-                <button className='edit-button' onClick={toggleEditState}>&#9998;</button>
             </div>
         }
     }
 
     const displayListItems = () => {
         return props.itemList[props.checklistIndex].subItems.map((item, index) => {
-            return <div className='list-item'>
-                <input id={index} checked={item.complete} type='checkbox' onChange={handleCheckChange}/>
-                <label style={item.complete ? complete : incomplete}>
-                    {item.label}
-                </label>
-                <button id={item.id} className='add-sub-item-button' onClick={handleAddSubItem}>&#10010;</button>
-                <button id={index} className='remove-button' onClick={handleDeleteListItem}>&#10006;</button>
+            return <div className='list-item'
+                        style={{display: 'flex',
+                                flexDirection: 'column'}}>
+                <div style={{display: 'flex',
+                             justifyContent: 'space-between'}}>
+                    <div>
+                        <input id={index} className='checkbox' checked={item.complete} type='checkbox' onChange={handleCheckChange}/>
+                        <label style={item.complete ? complete : incomplete}>
+                            {item.label}
+                        </label>
+                    </div>
+                    <div>
+                        <button id={item.id} className='add-sub-item-button' onClick={handleAddSubItem}>&#10010;</button>
+                        <button id={index} className='remove-button' onClick={handleDeleteListItem}>&#10006;</button>
+                    </div>
+                </div>
                 {displayListSubItems(item.id, index.toString())}
             </div>
         })
     }
 
     return <div id={props.checklistIndex}
-                className='checklist'>
-        <div className='item-header-container'>
+                className='checklist'
+                style={{display: 'flex',
+                        flexDirection: 'column'}}>
+        <div className='item-header-container'
+             style={{display: 'flex',
+                     justifyContent: 'space-between'}}>
             {displayItemLabelContainer()}
-            <button id={props.checklistIndex} className='remove-button' onClick={handleDeleteChecklist}>&#10006;</button>
+            <div>
+                <button className='edit-button' onClick={toggleEditState}>&#9998;</button>
+                <button id={props.checklistIndex} className='remove-button' onClick={handleDeleteChecklist}>&#10006;</button>
+            </div>
         </div>
-        <form onSubmit={handleSubmit}>
-            <input className='list-item-input'
-                   type='text'
-                   placeholder='Add Item...'
-                   value={inputValue}
-                   onChange={handleInputChange}/>
-        </form>
-        {displayListItems()}
+        <div>
+            <form onSubmit={handleSubmit}>
+                <input className='list-item-input'
+                    type='text'
+                    placeholder='Add Item...'
+                    value={inputValue}
+                    onChange={handleInputChange}/>
+            </form>
+            {displayListItems()}
+        </div>
     </div>
 }
 

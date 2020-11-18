@@ -1,10 +1,20 @@
 import React from 'react'
 
 function ProgressBar(props) {
+    const handleDelete = () => {
+        props.setDisplayProgressBar(false)
+    }
+
     return <div id='progress-bar-container'>
-        <div className='item-header-container'>
+        <div className='item-header-container'
+             style={{display: 'flex',
+                     flexDirection: 'column'}}>
             <p className='item-name'>Overall Progress</p>
-            <p id='overall-progress'>{(!props.progress && props.progress !== 0) ? null : `${(props.progress * 100).toFixed(1)}%`}</p>
+            <div style={{display: 'flex',
+                         justifyContent: 'space-between'}}>
+                <p style={{margin: '0px'}}>{(!props.progress && props.progress !== 0) ? null : `${(props.progress * 100).toFixed(1)}%`}</p>
+                <button className='remove-button' onClick={handleDelete}>&#10006;</button>
+            </div>
         </div>
         <div id='progress-bar'>
             <div id='progress-bar-complete'

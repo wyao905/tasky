@@ -50,11 +50,14 @@ function ChecklistSubItems(props) {
 
     const displayListItems = () => {
         return currentListItem.subItems.map((item, id) => {
-            return <div>
-                <input id={id} checked={item.complete} type='checkbox' onChange={handleCheckChange}/>
-                <label style={item.complete ? complete : incomplete}>
-                    {item.label}
-                </label>
+            return <div style={{display: 'flex',
+                                justifyContent: 'space-between'}}>
+                <div style={{marginBottom: '6px'}}>
+                    <input id={id} className='checkbox' checked={item.complete} type='checkbox' onChange={handleCheckChange}/>
+                    <label style={item.complete ? complete : incomplete}>
+                        {item.label}
+                    </label>
+                </div>
                 <button id={id} className='remove-button' onClick={handleDeleteListItem}>&#x2716;</button>
             </div>
         })

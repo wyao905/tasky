@@ -11,7 +11,8 @@ function DisplayContainer(props) {
 
     const displayProgressBar = () => {
         if(props.displayProgressBar) {
-            return <ProgressBar progress={completionProgress}/>
+            return <ProgressBar progress={completionProgress}
+                                setDisplayProgressBar={props.setDisplayProgressBar}/>
         } else {
             return null
         }
@@ -46,7 +47,8 @@ function DisplayContainer(props) {
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={{userSelect: 'none',
-                                            background: snapshot.isDragging ? 'lightblue' : 'lightcyan',
+                                            filter: snapshot.isDragging ? 'brightness(90%)' : 'brightness(100%)',
+                                            backgroundColor: 'rgb(255, 255, 255)',
                                             margin: '0 0 0 30px',
                                             width: '30rem',
                                             ...provided.draggableProps.style}}>
@@ -70,7 +72,8 @@ function DisplayContainer(props) {
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={{userSelect: 'none',
-                                            background: snapshot.isDragging ? 'lightblue' : 'lightcyan',
+                                            filter: snapshot.isDragging ? 'brightness(90%)' : 'brightness(100%)',
+                                            backgroundColor: 'rgb(255, 255, 255)',
                                             margin: '0 0 0 30px',
                                             width: '30rem',
                                             ...provided.draggableProps.style}}>
@@ -88,7 +91,7 @@ function DisplayContainer(props) {
         })
     }
 
-    return <div>
+    return <div >
         {displayProgressBar()}
         <DragDropContext onDragEnd={result => onDragEnd(result)}>
             <Droppable key={'item-list'} droppableId={'item-list'}>
