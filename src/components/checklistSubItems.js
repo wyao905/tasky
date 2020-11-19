@@ -9,7 +9,7 @@ function ChecklistSubItems(props) {
         e.preventDefault()
         currentListItem.subItems = [...currentListItem.subItems, {label: inputValue, complete: false}]
         currentChecklist.subItems = [...currentChecklist.subItems.slice(0, props.listItemIndex), currentListItem, ...currentChecklist.subItems.slice(parseInt(props.listItemIndex) + 1)]
-        props.setItemList([...props.itemList.slice(0, props.checklistIndex), currentChecklist, ...props.itemList.slice(parseInt(props.checklistIndex) + 1)])
+        props.updateItemList(props.checklistIndex, currentChecklist)
         setInputValue('')
         props.setSubItemAddState('')
     }
@@ -25,19 +25,19 @@ function ChecklistSubItems(props) {
             currentListItem.subItems[e.target.id].complete = false
         }
         currentChecklist.subItems = [...currentChecklist.subItems.slice(0, props.listItemIndex), currentListItem, ...currentChecklist.subItems.slice(parseInt(props.listItemIndex) + 1)]
-        props.setItemList([...props.itemList.slice(0, props.checklistIndex), currentChecklist, ...props.itemList.slice(parseInt(props.checklistIndex) + 1)])
+        props.updateItemList(props.checklistIndex, currentChecklist)
     }
 
     const handleDeleteListItem = (e) => {
         currentListItem.subItems = [...currentListItem.subItems.slice(0, e.target.id), ...currentListItem.subItems.slice(parseInt(e.target.id) + 1)]
         currentChecklist.subItems = [...currentChecklist.subItems.slice(0, props.listItemIndex), currentListItem, ...currentChecklist.subItems.slice(parseInt(props.listItemIndex) + 1)]
-        props.setItemList([...props.itemList.slice(0, props.checklistIndex), currentChecklist, ...props.itemList.slice(parseInt(props.checklistIndex) + 1)])
+        props.updateItemList(props.checklistIndex, currentChecklist)
     }
 
     const displayInputForm = () => {
         if(props.subItemAddState === props.listItemId) {
             return <form onSubmit={handleSubmit}>
-                <input className='list-item-input'
+                <input className='sub-list-item-input'
                        type='text'
                        placeholder='Add Item...'
                        value={inputValue}
@@ -52,7 +52,7 @@ function ChecklistSubItems(props) {
         return currentListItem.subItems.map((item, id) => {
             return <div style={{display: 'flex',
                                 justifyContent: 'space-between'}}>
-                <div style={{marginBottom: '6px'}}>
+                <div style={{paddingTop: '6px'}}>
                     <input id={id} className='checkbox' checked={item.complete} type='checkbox' onChange={handleCheckChange}/>
                     <label style={item.complete ? complete : incomplete}>
                         {item.label}

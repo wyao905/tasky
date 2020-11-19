@@ -38,7 +38,6 @@ function ItemAddContainer() {
 
     return <div>
         <form id='item-input-form'
-              style={{'display':'flex'}}
               onSubmit={handleSubmit}>
             <input id='item-input-form-text-input'
                 type='text'

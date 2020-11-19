@@ -12,14 +12,14 @@ function Checklist(props) {
     useEffect(() => {
         if(!props.itemLabel) {
             currentChecklist.label = `Checklist ${props.numOfLists}`
-            props.setItemList([...props.itemList.slice(0, props.checklistIndex), currentChecklist, ...props.itemList.slice(parseInt(props.checklistIndex) + 1)])
+            props.updateItemList(props.checklistIndex, currentChecklist)
         }
     })
 
     const handleSubmit = (e) => {
         e.preventDefault()
         currentChecklist.subItems = [...currentChecklist.subItems, {id: uuid(), label: inputValue, complete: false, subItems: []}]
-        props.setItemList([...props.itemList.slice(0, props.checklistIndex), currentChecklist, ...props.itemList.slice(parseInt(props.checklistIndex) + 1)])
+        props.updateItemList(props.checklistIndex, currentChecklist)
         setInputValue('')
         props.updateTasksOverview({...props.tasksOverview, total: props.tasksOverview.total += 1})
     }
@@ -28,9 +28,7 @@ function Checklist(props) {
         if(inputEditValue !== '') {
             e.preventDefault()
             currentChecklist.label = inputEditValue
-            const copiedItemList = [...props.itemList]
-            copiedItemList.splice(props.checklistIndex, 1, currentChecklist)
-            props.setItemList(copiedItemList)
+            props.updateItemList(props.checklistIndex, currentChecklist)
             setInputEditValue('')
         }
         setItemLabelEditState(false)
@@ -51,11 +49,11 @@ function Checklist(props) {
     const handleCheckChange = (e) => {
         if(e.target.checked) {
             currentChecklist.subItems[e.target.id].complete = true
-            props.setItemList([...props.itemList.slice(0, props.checklistIndex), currentChecklist, ...props.itemList.slice(parseInt(props.checklistIndex) + 1)])
+            props.updateItemList(props.checklistIndex, currentChecklist)
             props.updateTasksOverview({...props.tasksOverview, completed: props.tasksOverview.completed += 1})
         } else {
             currentChecklist.subItems[e.target.id].complete = false
-            props.setItemList([...props.itemList.slice(0, props.checklistIndex), currentChecklist, ...props.itemList.slice(parseInt(props.checklistIndex) + 1)])
+            props.updateItemList(props.checklistIndex, currentChecklist)
             props.updateTasksOverview({...props.tasksOverview, completed: props.tasksOverview.completed -= 1})
         }
     }
@@ -65,7 +63,7 @@ function Checklist(props) {
             props.updateTasksOverview({...props.tasksOverview, completed: props.tasksOverview.completed -= 1})
         }
         currentChecklist.subItems = [...currentChecklist.subItems.slice(0, e.target.id), ...currentChecklist.subItems.slice(parseInt(e.target.id) + 1)]
-        props.setItemList([...props.itemList.slice(0, props.checklistIndex), currentChecklist, ...props.itemList.slice(parseInt(props.checklistIndex) + 1)])
+        props.updateItemList(props.checklistIndex, currentChecklist)
         props.updateTasksOverview({...props.tasksOverview, total: props.tasksOverview.total -= 1})
     }
 
@@ -93,7 +91,7 @@ function Checklist(props) {
                                   listItemId={id}
                                   listItemIndex={index}
                                   itemList={props.itemList}
-                                  setItemList={props.setItemList}
+                                  updateItemList={props.updateItemList}
                                   subItemAddState={subItemAddState}
                                   setSubItemAddState={setSubItemAddState}/>
     }
@@ -116,9 +114,10 @@ function Checklist(props) {
 
     const displayListItems = () => {
         return props.itemList[props.checklistIndex].subItems.map((item, index) => {
-            return <div className='list-item'
-                        style={{display: 'flex',
-                                flexDirection: 'column'}}>
+            return <div style={{display: 'flex',
+                                flexDirection: 'column',
+                                marginTop: '6px',
+                                borderBottom: '1px solid rgb(225, 225, 225)'}}>
                 <div style={{display: 'flex',
                              justifyContent: 'space-between'}}>
                     <div>
@@ -138,12 +137,13 @@ function Checklist(props) {
     }
 
     return <div id={props.checklistIndex}
-                className='checklist'
                 style={{display: 'flex',
-                        flexDirection: 'column'}}>
-        <div className='item-header-container'
-             style={{display: 'flex',
-                     justifyContent: 'space-between'}}>
+                        flexDirection: 'column',
+                        padding: '24px',
+                        marginBottom: '2px',
+                        border: '1px solid lightgrey',
+                        borderRadius: '5px'}}>
+        <div className='item-header-container'>
             {displayItemLabelContainer()}
             <div>
                 <button className='edit-button' onClick={toggleEditState}>&#9998;</button>
@@ -153,10 +153,10 @@ function Checklist(props) {
         <div>
             <form onSubmit={handleSubmit}>
                 <input className='list-item-input'
-                    type='text'
-                    placeholder='Add Item...'
-                    value={inputValue}
-                    onChange={handleInputChange}/>
+                       type='text'
+                       placeholder='Add Item...'
+                       value={inputValue}
+                       onChange={handleInputChange}/>
             </form>
             {displayListItems()}
         </div>

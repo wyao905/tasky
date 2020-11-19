@@ -11,14 +11,16 @@
   border-bottom: none;
   border-right: 1px solid lightgrey;
   outline: none;
-  margin: 5px;
+  margin: 3px 0 0 0;
+  padding: 6px;
   width: 15rem;
+  font-size: 16px;
 }
 
 #item-input-form-submit {
   border: none;
   border-radius: 50%;
-  background-color: cyan;
+  background-color: #0085ff;
   outline: none;
   width: 2rem;
   height: 2rem;
@@ -35,36 +37,52 @@
 .item-header-container {
   margin: 0 0 3px 0;
   display: flex;
+  justify-content: space-between;
 }
 
 .list-item-input {
   border: none;
   background-color: rgb(255, 255, 255);
+  width: 418px;
   outline: none;
   margin-bottom: 6px;
   padding: 6px;
+  font-size: 14px;
+}
+
+.sub-list-item-input {
+  border: none;
+  background-color: rgb(255, 255, 255);
+  width: 388px;
+  outline: none;
+  margin-top: 6px;
+  padding: 6px;
+  font-size: 14px;
 }
 
 .list-item-input:focus {
-  background-color: rgb(245, 245, 245);
+  border-bottom: 1px solid lightgrey;
+  padding: 6px 6px 5px 6px;
+}
+
+.sub-list-item-input:focus {
+  border-bottom: 1px solid lightgrey;
+  padding: 6px 6px 5px 6px;
 }
 
 .list-item-edit-label-input {
   border: none;
   background-color: rgb(255, 255, 255);
-  padding: 6px 0;
+  padding: 6px;
+  width: 365px;
   outline: none;
   font-size: medium;
   font-weight: bold;
 }
 
 .list-item-edit-label-input:focus {
-  background-color: rgb(245, 245, 245);
-}
-
-.list-item {
-  margin-bottom: 6px;
-  border-bottom: 1px solid rgb(225, 225, 225);
+  border-bottom: 1px solid lightgrey;
+  padding: 6px 6px 5px 6px;
 }
 
 .remove-button {
@@ -100,13 +118,6 @@
   color: rgb(25, 25, 25);
 }
 
-.checklist {
-  padding: 24px;
-  margin-bottom: 2px;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-}
-
 .note {
   padding: 24px;
   margin-bottom: 2px;
@@ -116,6 +127,7 @@
 
 .sub-checklist {
   margin: 0 0 6px 30px;
+
 }
 
 #progress-bar-container {

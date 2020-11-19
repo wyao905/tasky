@@ -22,6 +22,12 @@ function DisplayContainer(props) {
         props.setItemList([...props.itemList.slice(0, itemInd), ...props.itemList.slice(parseInt(itemInd) + 1)])
     }
 
+    const updateItemList = (index, item) =>{
+        const copiedItemList = [...props.itemList]
+        copiedItemList.splice(index, 1, item)
+        props.setItemList(copiedItemList)
+    }
+
     const onDragEnd = (result) => {
         if(!result.destination) {
             return
@@ -55,7 +61,7 @@ function DisplayContainer(props) {
                             <Checklist itemLabel={item.label} 
                                        numOfLists={numOfLists}
                                        itemList={props.itemList}
-                                       setItemList={props.setItemList}
+                                       updateItemList={updateItemList}
                                        tasksOverview={tasksOverview}
                                        updateTasksOverview={setTasksOverview}
                                        handleItemDelete={handleItemDelete}
@@ -81,7 +87,7 @@ function DisplayContainer(props) {
                                   itemContent={item.content}
                                   numOfNotes={numOfNotes}
                                   itemList={props.itemList}
-                                  setItemList={props.setItemList}
+                                  updateItemList={updateItemList}
                                   handleItemDelete={handleItemDelete}
                                   noteIndex={index}/>
                         </div>

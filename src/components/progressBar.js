@@ -7,8 +7,7 @@ function ProgressBar(props) {
 
     return <div id='progress-bar-container'>
         <div className='item-header-container'
-             style={{display: 'flex',
-                     flexDirection: 'column'}}>
+             style={{flexDirection: 'column'}}>
             <p className='item-name'>Overall Progress</p>
             <div style={{display: 'flex',
                          justifyContent: 'space-between'}}>
@@ -17,8 +16,7 @@ function ProgressBar(props) {
             </div>
         </div>
         <div id='progress-bar'>
-            <div id='progress-bar-complete'
-                style={{backgroundColor: 'cyan',
+            <div style={{backgroundColor: '#0085ff',
                         width: (!props.progress && props.progress !== 0) ? 0 + '%' : (props.progress * 100).toFixed(1) + '%',
                         height: 100 + '%',
                         borderRadius: '15px'}}/>

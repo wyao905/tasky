@@ -9,21 +9,15 @@ function Note(props) {
     useEffect(() => {
         if(!props.itemLabel) {
             currentNote.label = `Note ${props.numOfNotes}`
-            updateItemList()
+            props.updateItemList(props.noteIndex, currentNote)
         }
     })
-
-    const updateItemList = () => {
-        const copiedItemList = [...props.itemList]
-        copiedItemList.splice(props.noteIndex, 1, currentNote)
-        props.setItemList(copiedItemList)
-    }
 
     const handleEditSubmit = (e) => {
         if(inputEditLabelValue !== '') {
             e.preventDefault()
             currentNote.label = inputEditLabelValue
-            updateItemList()
+            props.updateItemList(props.noteIndex, currentNote)
             setInputEditLabelValue('')
         }
         setItemLabelEditState(false)
@@ -62,9 +56,7 @@ function Note(props) {
     }
 
     return <div className='note'>
-        <div className='item-header-container'
-             style={{display: 'flex',
-                     justifyContent: "space-between"}}>
+        <div className='item-header-container'>
             {displayItemLabelContainer()}
             <div>
                 <button className='edit-button' onClick={toggleEditLabelState}>&#9998;</button>
@@ -78,6 +70,7 @@ function Note(props) {
                           width: '416px',
                           height: '150px',
                           fontFamily: 'inherit',
+                          fontSize: 'inherit',
                           resize: 'none',
                           outline: 'none'}}
                   value={inputValue}
