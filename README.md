@@ -9,4 +9,6 @@ This repo contains the front end portion of the project. You can test out a demo
 
 If you already have a Monday.com account, you can try out Tasky by installing the app.
 
-<a href="https://auth.monday.com/oauth2/authorize?client_id=cdd1875ed0b3a4086cbe66cf06fdf08c&response_type=install"> <img alt="Add to monday.com" height="42" src="https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/uploads/Tal/4b5d9548-0598-436e-a5b6-9bc5f29ee1d9_Group12441.png" /> </a>
+<a href="https://auth.monday.com/oauth2/authorize?client_id=cdd1875ed0b3a4086cbe66cf06fdf08c&response_type=install"> <img alt="Add to monday.com" height="42" src="https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/uploads/Tal/4b5d9548-0598-436e-a5b6-9bc5f29ee1d9_Group12441.png" /></a>
+
+After installing the app, you can try it out in the item view panel by clicking the `+ Add View` button.
